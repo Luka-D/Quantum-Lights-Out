@@ -385,6 +385,7 @@ def visualize_solution(grid, solution, console):
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "-c",
         "--console",
         help="Displays the lights out grid in the console",
         required=False,

@@ -211,8 +211,6 @@ def compute_quantum_solution(lights):
 
     score_sorted = sorted(counts.items(), key=lambda x: x[1], reverse=True)
     final_score = score_sorted[0:40]
-    print(final_score[0][0])
-    plot_histogram(counts)
     quantum_solution = final_score[0][0]
     return quantum_solution
 
@@ -329,7 +327,7 @@ def visualize_solution(grid, solution, console):
     if console:
         visualize_lights_out_grid_to_console(grid)
 
-    visualize_lights_out_grid_to_LED(grid)
+    # visualize_lights_out_grid_to_LED(grid)
     time.sleep(1)
 
     for index, step in enumerate(solution):
@@ -338,7 +336,7 @@ def visualize_solution(grid, solution, console):
             if console:
                 visualize_lights_out_grid_to_console(grid, index)
 
-            visualize_lights_out_grid_to_LED(grid, index)
+            # visualize_lights_out_grid_to_LED(grid, index)
 
             # Flip the square itself
             grid[index] = switch(grid[index])
@@ -379,7 +377,7 @@ def visualize_solution(grid, solution, console):
             if console:
                 visualize_lights_out_grid_to_console(grid)
 
-            visualize_lights_out_grid_to_LED(grid)
+            # visualize_lights_out_grid_to_LED(grid)
 
 
 def parse_arguments():
@@ -397,9 +395,10 @@ def parse_arguments():
 def main(**kwargs):
     args = parse_arguments()
     while True:
+        print(lights)
         print("Choosing random grid arrangement...")
-        lights_grid = choice(lights)
-        print(lights_grid)
+        lights_grid = choice(lights).copy()
+        print("Grid chosen:", lights_grid)
         print("Computing quantum solution...")
         quantum_solution = compute_quantum_solution(lights_grid)
         print("Quantum solution found!")

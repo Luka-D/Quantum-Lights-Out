@@ -293,7 +293,7 @@ def visualize_lights_out_grid_to_LED(grid, selected=None):
     time.sleep(delay)
 
 
-def visualize_solution(grid, solution):
+def visualize_solution(grid, solution, console):
     """
     This function receives the lights-out grid and
     the solution to the grid that was generated from the quantum circuit.
@@ -304,7 +304,8 @@ def visualize_solution(grid, solution):
                             whether it is on or off.
         solution (string): The sequence of events to be followed to turn the whole grid off. This solution
                            is obtained from the Qiskit code.
-
+        console (bool): Determines whether the lights out grid is also printed to the console during each
+                        step.
     Returns:
         None
     """
@@ -325,12 +326,20 @@ def visualize_solution(grid, solution):
             return square
 
     # Visualize the grid the first time before operations
-    visualize_lights_out_grid_to_console(grid)
+    if console:
+        visualize_lights_out_grid_to_console(grid)
+
+    visualize_lights_out_grid_to_LED(grid)
     time.sleep(1)
 
     for index, step in enumerate(solution):
         if step == 1:
-            visualize_lights_out_grid_to_console(grid, index)
+            # Show grid before all squares have been flipped, include the square that is pressed
+            if console:
+                visualize_lights_out_grid_to_console(grid, index)
+
+            visualize_lights_out_grid_to_LED(grid, index)
+
             # Flip the square itself
             grid[index] = switch(grid[index])
 
@@ -365,7 +374,12 @@ def visualize_solution(grid, solution):
                     grid[index + 1] = switch(grid[index + 1])
                 except:
                     pass
-            visualize_lights_out_grid_to_console(grid)
+
+            # Show grid after all squares have been flipped
+            if console:
+                visualize_lights_out_grid_to_console(grid)
+
+            visualize_lights_out_grid_to_LED(grid)
 
 
 def parse_arguments():
@@ -381,8 +395,6 @@ def parse_arguments():
 
 def main(**kwargs):
     args = parse_arguments()
-    if args.console:
-        print(args.console)
     while True:
         print("Choosing random grid arrangement...")
         lights_grid = choice(lights)
@@ -391,7 +403,7 @@ def main(**kwargs):
         quantum_solution = compute_quantum_solution(lights_grid)
         print("Quantum solution found!")
         print("Visualizing solution...")
-        visualize_solution(lights_grid, quantum_solution)
+        visualize_solution(lights_grid, quantum_solution, args.console)
 
 
 if __name__ == "__main__":

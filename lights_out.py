@@ -18,8 +18,8 @@ from qiskit_aer import AerSimulator
 from qiskit.visualization import plot_histogram
 
 # Imports for LED array
-# import board
-# import neopixel_spi as neopixel
+import board
+import neopixel_spi as neopixel
 
 # Array containing the initial lights out grid values
 lights = [

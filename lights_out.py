@@ -327,7 +327,7 @@ def visualize_solution(grid, solution, console):
     if console:
         visualize_lights_out_grid_to_console(grid)
 
-    # visualize_lights_out_grid_to_LED(grid)
+    visualize_lights_out_grid_to_LED(grid)
     time.sleep(1)
 
     for index, step in enumerate(solution):
@@ -336,7 +336,7 @@ def visualize_solution(grid, solution, console):
             if console:
                 visualize_lights_out_grid_to_console(grid, index)
 
-            # visualize_lights_out_grid_to_LED(grid, index)
+            visualize_lights_out_grid_to_LED(grid, index)
 
             # Flip the square itself
             grid[index] = switch(grid[index])
@@ -377,7 +377,7 @@ def visualize_solution(grid, solution, console):
             if console:
                 visualize_lights_out_grid_to_console(grid)
 
-            # visualize_lights_out_grid_to_LED(grid)
+            visualize_lights_out_grid_to_LED(grid)
 
 
 def parse_arguments():

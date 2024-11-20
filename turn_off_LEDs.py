@@ -28,6 +28,7 @@ def turn_off_LEDs():
             pixels[index] = 0x000000
 
         pixel.show()
+        print("Done!")
     except Exception as e:
         print("Error turning off LEDs: ", e)
 

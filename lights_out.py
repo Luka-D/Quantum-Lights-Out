@@ -259,14 +259,14 @@ def visualize_lights_out_grid_to_LED(grid, selected=None):
     """
 
     # For later
-    # NUM_PIXELS = 192
-    # PIXEL_ORDER = neopixel.RGB
+    NUM_PIXELS = 192
+    PIXEL_ORDER = neopixel.RGB
 
-    # spi = board.SPI()
+    spi = board.SPI()
 
-    # pixels = neopixel.NeoPixel_SPI(
-    #     spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False
-    # )
+    pixels = neopixel.NeoPixel_SPI(
+        spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False
+    )
 
     off_color = (
         0x83209E  # Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple

@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 import time
+from random import choice
+import argparse
 
 # Qiskit imports
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, transpile
@@ -16,11 +18,31 @@ from qiskit_aer import AerSimulator
 from qiskit.visualization import plot_histogram
 
 # Imports for LED array
-import board
-import neopixel_spi as neopixel
+# import board
+# import neopixel_spi as neopixel
 
 # Array containing the initial lights out grid values
-lights = [0, 1, 1, 1, 0, 0, 1, 1, 1]
+lights = [
+    [0, 1, 1, 1, 0, 0, 1, 1, 1],
+    [0, 0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 1, 1],
+    [1, 1, 1, 1, 0, 1, 1, 1, 1],
+    [1, 0, 0, 0, 1, 0, 0, 1, 1],
+    [1, 0, 1, 1, 0, 0, 1, 0, 1],
+    [1, 0, 0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 1, 0, 1, 1, 0, 0, 1],
+    [0, 1, 0, 0, 0, 1, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 1, 0, 0],
+    [1, 1, 1, 0, 1, 0, 1, 1, 1],
+    [0, 1, 0, 0, 1, 0, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 1, 0, 1],
+    [0, 1, 1, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [1, 0, 1, 0, 0, 1, 0, 1, 0],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1],
+]
+
 
 # Dictionary that corelates the grid index to an index on the LED array (Centered in the LED array)
 # 1,9 - 1,14
@@ -189,13 +211,11 @@ def compute_quantum_solution(lights):
 
     score_sorted = sorted(counts.items(), key=lambda x: x[1], reverse=True)
     final_score = score_sorted[0:40]
-    print(final_score[0][0])
-    plot_histogram(counts)
     quantum_solution = final_score[0][0]
     return quantum_solution
 
 
-def visualize_lights_out_grid_to_console(grid):
+def visualize_lights_out_grid_to_console(grid, selected=None):
     """
     This function prints out the lights-out grid to the console in a nice format.
 
@@ -214,7 +234,7 @@ def visualize_lights_out_grid_to_console(grid):
     # Iterate through each row and print as an empty or full square
     for row in chunked_grid:
         temp_list = []
-        for square in row:
+        for index, square in enumerate(row):
             if square == 1:
                 temp_list.append("\u25A0")
             else:
@@ -239,26 +259,14 @@ def visualize_lights_out_grid_to_LED(grid, selected=None):
     """
 
     # For later
-    NUM_PIXELS = 192
-    PIXEL_ORDER = neopixel.RGB
+    # NUM_PIXELS = 192
+    # PIXEL_ORDER = neopixel.RGB
 
-    spi = board.SPI()
+    # spi = board.SPI()
 
-    pixels = neopixel.NeoPixel_SPI(
-        spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False
-    )
-
-    def plotcalc(x, y, color, pixels):
-        # top row
-        x1 = x * 4 + (0 if x % 2 == 0 else 3)
-        y1 = 7 - y if x % 2 == 0 else y - 7
-
-        # bottom row
-        x2 = 96 + (23 - x) * 4 + (0 if x % 2 == 0 else 3)
-        y2 = 3 - y if x % 2 == 0 else y - 3
-        i = x2 + y2 if y < 4 else x1 + y1
-        print(x, y, i)
-        pixels[i] = color
+    # pixels = neopixel.NeoPixel_SPI(
+    #     spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False
+    # )
 
     off_color = (
         0x83209E  # Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple
@@ -283,7 +291,7 @@ def visualize_lights_out_grid_to_LED(grid, selected=None):
     time.sleep(delay)
 
 
-def visualize_solution(grid, solution):
+def visualize_solution(grid, solution, console):
     """
     This function receives the lights-out grid and
     the solution to the grid that was generated from the quantum circuit.
@@ -294,7 +302,8 @@ def visualize_solution(grid, solution):
                             whether it is on or off.
         solution (string): The sequence of events to be followed to turn the whole grid off. This solution
                            is obtained from the Qiskit code.
-
+        console (bool): Determines whether the lights out grid is also printed to the console during each
+                        step.
     Returns:
         None
     """
@@ -315,12 +324,20 @@ def visualize_solution(grid, solution):
             return square
 
     # Visualize the grid the first time before operations
+    if console:
+        visualize_lights_out_grid_to_console(grid)
+
     visualize_lights_out_grid_to_LED(grid)
     time.sleep(1)
 
     for index, step in enumerate(solution):
         if step == 1:
+            # Show grid before all squares have been flipped, include the square that is pressed
+            if console:
+                visualize_lights_out_grid_to_console(grid, index)
+
             visualize_lights_out_grid_to_LED(grid, index)
+
             # Flip the square itself
             grid[index] = switch(grid[index])
 
@@ -355,14 +372,39 @@ def visualize_solution(grid, solution):
                     grid[index + 1] = switch(grid[index + 1])
                 except:
                     pass
+
+            # Show grid after all squares have been flipped
+            if console:
+                visualize_lights_out_grid_to_console(grid)
+
             visualize_lights_out_grid_to_LED(grid)
 
 
-if __name__ == "__main__":
-    print("Computing quantum solution...")
-    quantum_solution = compute_quantum_solution(lights)
-    print("Quantum solution found!")
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-c",
+        "--console",
+        help="Displays the lights out grid in the console",
+        required=False,
+        action="store_true",
+    )
+    return parser.parse_args()
+
+
+def main(**kwargs):
+    args = parse_arguments()
     while True:
+        print(lights)
+        print("Choosing random grid arrangement...")
+        lights_grid = choice(lights).copy()
+        print("Grid chosen:", lights_grid)
+        print("Computing quantum solution...")
+        quantum_solution = compute_quantum_solution(lights_grid)
+        print("Quantum solution found!")
         print("Visualizing solution...")
-        lights = [0, 1, 1, 1, 0, 0, 1, 1, 1]
-        visualize_solution(lights, quantum_solution)
+        visualize_solution(lights_grid, quantum_solution, args.console)
+
+
+if __name__ == "__main__":
+    main()

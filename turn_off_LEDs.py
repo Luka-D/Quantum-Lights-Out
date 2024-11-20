@@ -10,7 +10,7 @@ def turn_off_LEDs():
     """
     A simple function that iterates through every LED and turns it off.
 
-    Agrs:
+    Args:
         None
 
     Returns:
@@ -28,7 +28,7 @@ def turn_off_LEDs():
             pixels[index] = 0x000000
 
         pixels.show()
-        print("Done!")
+
     except Exception as e:
         print("Error turning off LEDs: ", e)
 
@@ -36,6 +36,7 @@ def turn_off_LEDs():
 def main():
     print("Turning off all LEDs...")
     turn_off_LEDs()
+    print("Done!")
 
 
 if __name__ == "__main__":

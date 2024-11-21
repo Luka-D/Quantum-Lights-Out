@@ -1,5 +1,5 @@
 # Quantum-Lights-Out
-This is a demo for the RasQberry Two Platform. It is an implementation of the [Lights Out](https://en.wikipedia.org/wiki/Lights_Out_(game)) puzzle game that is solved using a quantum algorithm and then displays every step of the solution process on the RasQberry Two's LED panel. The LED panel is required for this script to run, although you can also have the solution steps printed to the console by adding the `--console` argument.
+This is a demo for the [RasQberry Two Platform](https://github.com/JanLahmann/RasQberry-Two). It is an implementation of the [Lights Out](https://en.wikipedia.org/wiki/Lights_Out_(game)) puzzle game that is solved using a quantum algorithm and then displays every step of the solution process on the RasQberry Two's LED panel. The LED panel is required for this script to run, although you can also have the solution steps printed to the console by adding the `--console` argument.
 
 ## Acknowledgements
 

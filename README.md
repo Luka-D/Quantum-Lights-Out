@@ -19,4 +19,8 @@ To run the script with console printing of every step, use:
 
 ```python3 lights_out.py --console```
 
+Additionally, to turn off all of the LEDs, you can run this script:
+
+```python3 turn_off_LEDs.py```
+
 **! Note:** To run this script on a Raspberry Pi 5, you need to have SPI set up and use the proper wiring configuration. Instructions for wiring and setting up SPI can be found here.

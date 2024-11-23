@@ -59,7 +59,7 @@ LED_array_indices = {
 }
 
 # Delay before showing the next iteration
-delay = 1
+DELAY = 1
 
 # Neopixel constants
 NUM_PIXELS = 192
@@ -281,7 +281,7 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
                 pixels[coord] = OFF_COLOR
     pixels.show()
     # Sleep so that the display doesn't change too fast
-    time.sleep(delay)
+    time.sleep(DELAY)
 
 
 def visualize_solution(grid, solution, console):

@@ -46,8 +46,6 @@ lights = [
 
 
 # Dictionary that corelates the grid index to an index on the LED array (Centered in the LED array)
-# 1,9 - 1,14
-# 6,9 - 6,14
 LED_array_indices = {
     0: [38, 41, 37, 42],
     1: [46, 49, 45, 50],
@@ -313,7 +311,7 @@ def visualize_solution(grid, solution, console):
         auto_write=False,
     )
 
-    # Find square root of the length of the grid
+    # The square root of the length of the grid will be used to find the left and right columns later
     root = int(math.sqrt(len(grid)))
 
     # Convert solution to list of ints if it's a string

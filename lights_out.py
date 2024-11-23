@@ -401,7 +401,6 @@ def parse_arguments():
 def main(**kwargs):
     args = parse_arguments()
     while True:
-        print(lights)
         print("Choosing random grid arrangement...")
         lights_grid = choice(lights).copy()
         print("Grid chosen:", lights_grid)
@@ -410,6 +409,7 @@ def main(**kwargs):
         print("Quantum solution found!")
         print("Visualizing solution...")
         visualize_solution(lights_grid, quantum_solution, args.console)
+        print("\n")
 
 
 if __name__ == "__main__":

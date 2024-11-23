@@ -21,6 +21,7 @@ from qiskit.visualization import plot_histogram
 import board
 import neopixel_spi as neopixel
 
+# Constants
 # Array containing the initial lights out grid values
 lights = [
     [0, 1, 1, 1, 0, 0, 1, 1, 1],
@@ -61,6 +62,14 @@ LED_array_indices = {
 
 # Delay before showing the next iteration
 delay = 1
+
+# Neopixel constants
+NUM_PIXELS = 192
+PIXEL_ORDER = neopixel.RGB
+BRIGHTNESS = 1.0
+OFF_COLOR = 0x83209E  # Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple
+ON_COLOR = 0x808080  # White
+SELECTED_COLOR = 0xFA0100  # Green
 
 
 def compute_quantum_solution(lights):
@@ -246,46 +255,32 @@ def visualize_lights_out_grid_to_console(grid, selected=None):
     print("\n")
 
 
-def visualize_lights_out_grid_to_LED(grid, selected=None):
+def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
     """
     This function shows the lights-out grid on the LED arrray.
 
     Args:
         grid (list of int): A list of integers each representing one square in the lights-out grid and
                             whether it is on or off.
-        grid (int): (Optional) The index that is pressed on the board for that step.
+        pixels (Neopixel_SPI): A sequence of neopixels.
+        selected (int, optional) The index that is pressed on the board for that step.
+
     Returns:
         None
     """
-
-    # For later
-    NUM_PIXELS = 192
-    PIXEL_ORDER = neopixel.RGB
-
-    spi = board.SPI()
-
-    pixels = neopixel.NeoPixel_SPI(
-        spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False
-    )
-
-    off_color = (
-        0x83209E  # Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple
-    )
-    on_color = 0x808080  #
-    selected_color = 0xFA0100  #
 
     # Iterate through each row and print as an empty or full square
     for index, square in enumerate(grid):
         LED_array_index_list = LED_array_indices[index]
         if selected != None and index == selected:
             for coord in LED_array_index_list:
-                pixels[coord] = selected_color
+                pixels[coord] = SELECTED_COLOR
         elif square == 1:
             for coord in LED_array_index_list:
-                pixels[coord] = on_color
+                pixels[coord] = ON_COLOR
         else:
             for coord in LED_array_index_list:
-                pixels[coord] = off_color
+                pixels[coord] = OFF_COLOR
     pixels.show()
     # Sleep so that the display doesn't change too fast
     time.sleep(delay)
@@ -307,6 +302,17 @@ def visualize_solution(grid, solution, console):
     Returns:
         None
     """
+    # Neopixel initialization
+    spi = board.SPI()
+
+    pixels = neopixel.NeoPixel_SPI(
+        spi,
+        NUM_PIXELS,
+        pixel_order=PIXEL_ORDER,
+        brightness=BRIGHTNESS,
+        auto_write=False,
+    )
+
     # Find square root of the length of the grid
     root = int(math.sqrt(len(grid)))
 
@@ -327,7 +333,7 @@ def visualize_solution(grid, solution, console):
     if console:
         visualize_lights_out_grid_to_console(grid)
 
-    visualize_lights_out_grid_to_LED(grid)
+    visualize_lights_out_grid_to_LED(grid, pixels)
     time.sleep(1)
 
     for index, step in enumerate(solution):
@@ -336,7 +342,7 @@ def visualize_solution(grid, solution, console):
             # if console:
             #     visualize_lights_out_grid_to_console(grid, index)
 
-            visualize_lights_out_grid_to_LED(grid, index)
+            visualize_lights_out_grid_to_LED(grid, pixels, index)
 
             # Flip the square itself
             grid[index] = switch(grid[index])
@@ -377,7 +383,7 @@ def visualize_solution(grid, solution, console):
             if console:
                 visualize_lights_out_grid_to_console(grid)
 
-            visualize_lights_out_grid_to_LED(grid)
+            visualize_lights_out_grid_to_LED(grid, pixels)
 
 
 def parse_arguments():

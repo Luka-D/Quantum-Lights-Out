@@ -398,17 +398,20 @@ def parse_arguments():
 
 def main(**kwargs):
     args = parse_arguments()
-    while True:
-        print("Starting Quantum Lights Out Solver!")
-        print("Choosing random grid arrangement...")
-        lights_grid = choice(lights).copy()
-        print("Grid chosen:", lights_grid)
-        print("Computing quantum solution...")
-        quantum_solution = compute_quantum_solution(lights_grid)
-        print("Quantum solution found!")
-        print("Visualizing solution...")
-        visualize_solution(lights_grid, quantum_solution, args.console)
-        print("\n")
+    try:
+        while True:
+            print("Starting Quantum Lights Out Solver!")
+            print("Choosing random grid arrangement...")
+            lights_grid = choice(lights).copy()
+            print("Grid chosen:", lights_grid)
+            print("Computing quantum solution...")
+            quantum_solution = compute_quantum_solution(lights_grid)
+            print("Quantum solution found!")
+            print("Visualizing solution...")
+            visualize_solution(lights_grid, quantum_solution, args.console)
+            print("\n")
+    except Exception as e:
+        print("An error occured: ", e)
 
 
 if __name__ == "__main__":

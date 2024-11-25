@@ -337,8 +337,8 @@ def visualize_solution(grid, solution, console):
     for index, step in enumerate(solution):
         if step == 1:
             # Show grid before all squares have been flipped, include the square that is pressed
-            if console:
-                visualize_lights_out_grid_to_console(grid, index)
+            # if console:
+            #     visualize_lights_out_grid_to_console(grid, index)
 
             visualize_lights_out_grid_to_LED(grid, pixels, index)
 
@@ -399,6 +399,7 @@ def parse_arguments():
 def main(**kwargs):
     args = parse_arguments()
     while True:
+        print("Starting Quantum Lights Out Solver!")
         print("Choosing random grid arrangement...")
         lights_grid = choice(lights).copy()
         print("Grid chosen:", lights_grid)

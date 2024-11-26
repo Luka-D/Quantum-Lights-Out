@@ -270,7 +270,7 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
         grid (list of int): A list of integers each representing one square in the lights-out grid and
                             whether it is on or off.
         pixels (Neopixel_SPI): A sequence of neopixels.
-        selected (int, optional) The index that is pressed on the board for that step.
+        selected (int, optional): The index that is pressed on the board for that step.
 
     Returns:
         None

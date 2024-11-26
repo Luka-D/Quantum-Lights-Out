@@ -235,8 +235,15 @@ def visualize_lights_out_grid_to_console(grid, selected=None):
     rows = []
     root = int(math.sqrt(len(grid)))
 
+    # Create a copy of the grid to not modify the original list
+    grid_copy = grid.copy()
+
+    # Mark which square was pressed
+    if selected:
+        grid_copy[selected] = "X"
+
     # Chunk the list into sub lists based on each row
-    chunked_grid = [grid[x : x + root] for x in range(0, len(grid), root)]
+    chunked_grid = [grid_copy[x : x + root] for x in range(0, len(grid_copy), root)]
 
     # Iterate through each row and print as an empty or full square
     for row in chunked_grid:
@@ -244,8 +251,10 @@ def visualize_lights_out_grid_to_console(grid, selected=None):
         for index, square in enumerate(row):
             if square == 1:
                 temp_list.append("\u25A0")
-            else:
+            elif square == 0:
                 temp_list.append("\u25A1")
+            elif square == "X":
+                temp_list.append("X")
         rows.append(temp_list)
 
     # Print final result split by rows to make it looks nice
@@ -337,8 +346,8 @@ def visualize_solution(grid, solution, console):
     for index, step in enumerate(solution):
         if step == 1:
             # Show grid before all squares have been flipped, include the square that is pressed
-            # if console:
-            #     visualize_lights_out_grid_to_console(grid, index)
+            if console:
+                visualize_lights_out_grid_to_console(grid, index)
 
             visualize_lights_out_grid_to_LED(grid, pixels, index)
 

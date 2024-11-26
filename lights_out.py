@@ -240,7 +240,7 @@ def visualize_lights_out_grid_to_console(grid, selected=None):
     grid_copy = grid.copy()
 
     # Mark which square was pressed
-    if selected:
+    if selected != None:
         grid_copy[selected] = "X"
 
     # Chunk the list into sub lists based on each row

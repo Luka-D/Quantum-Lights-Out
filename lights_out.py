@@ -65,9 +65,9 @@ DELAY = 1
 NUM_PIXELS = 192
 PIXEL_ORDER = neopixel.RGB
 BRIGHTNESS = 1.0
-OFF_COLOR = 0x83209E  # Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple
-ON_COLOR = 0x808080  # White
-SELECTED_COLOR = 0xFA0100  # Green
+OFF_COLOR = 0x111111  # Grey Other colors: 0x7F00FF for Violet, 0xBF40BF for Bright Purple
+ON_COLOR = 0x0000FF  # Blue
+SELECTED_COLOR = 0xFF0000  # Green
 
 
 def compute_quantum_solution(lights):

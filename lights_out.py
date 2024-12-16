@@ -355,6 +355,7 @@ def visualize_solution(grid, solution, args):
                 visualize_lights_out_grid_to_console(grid, index)
 
             visualize_lights_out_grid_to_LED(grid, pixels, index)
+            time.sleep(delay)
 
             # Flip the square itself
             grid[index] = switch(grid[index])

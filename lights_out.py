@@ -58,13 +58,10 @@ LED_array_indices = {
     8: [138, 133, 137, 134],
 }
 
-# Delay before showing the next iteration
-DELAY = 1
-
 # Neopixel constants
 NUM_PIXELS = 192
 PIXEL_ORDER = neopixel.RGB
-BRIGHTNESS = 1.0
+
 # Colors for Neopixel are in the form GRB, so switch accordingly from the standard RGB hex codes
 OFF_COLOR = 0x111111  # Grey
 ON_COLOR = 0x0000FF  # Blue Other colors: 0x007FFF for Violet, 45FF00 for Orange, DFFF00 for Golden Yellow

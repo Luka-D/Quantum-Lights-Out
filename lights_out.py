@@ -416,7 +416,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--delay",
-        help="Sets the delay (in seconds) between displaying the LEDs",
+        help="Sets the delay (in seconds) between iteration steps for the LED array and console",
         required=False,
         type=float,
         default=1.0,
@@ -424,7 +424,7 @@ def parse_arguments():
     parser.add_argument(
         "-b",
         "--brightness",
-        help="Sets the brightness of LEDs, between 0.0 and 1.0.",
+        help="Sets the brightness of LEDs, between 0.0 and 1.0",
         required=False,
         type=float,
         default=1.0,

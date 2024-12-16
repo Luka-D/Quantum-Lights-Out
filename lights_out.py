@@ -295,7 +295,7 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
     time.sleep(DELAY)
 
 
-def visualize_solution(grid, solution, console):
+def visualize_solution(grid, solution, args):
     """
     This function receives the lights-out grid and
     the solution to the grid that was generated from the quantum circuit.
@@ -311,6 +311,10 @@ def visualize_solution(grid, solution, console):
     Returns:
         None
     """
+    # Set all command line args
+    console = args.console
+    delay = args.delay
+
     # Neopixel initialization
     spi = board.SPI()
 
@@ -404,6 +408,13 @@ def parse_arguments():
         required=False,
         action="store_true",
     )
+    parser.add_argument(
+        "--delay",
+        help="Sets the delay between displaying the LEDs",
+        required=False,
+        type=float,
+        default=1.0,
+    )
     return parser.parse_args()
 
 
@@ -419,7 +430,7 @@ def main(**kwargs):
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
             print("Visualizing solution...")
-            visualize_solution(lights_grid, quantum_solution, args.console)
+            visualize_solution(lights_grid, quantum_solution, args)
             print("\n")
     except Exception as e:
         print("An error occured: ", e)

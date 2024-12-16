@@ -14,7 +14,7 @@ Thank you to the IBM Quantum Challenge 2020 for providing most of the code for t
 | ---------------- | ------- | ----------------------------------------------------------------------------- |
 | -h, --help       | None    | Displays the help message and then exits.                                     |
 | -c, --console    | False   | Displays the grid iterations in the console. (bool)                           |
-| --delay          | 1.0     | Sets the delay between iteration steps for the LED array and console. (float) |
+| --delay          | 1.0     | Sets the delay (in seconds) between iteration steps for the LED array and console. (float) |
 | -b, --brightness | 1.0     | Sets the brightness of the LEDs. Accepts ranges between 0.0 and 1.0. (float)  |
 
 ## How to Run

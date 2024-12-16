@@ -416,7 +416,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--delay",
-        help="Sets the delay between displaying the LEDs",
+        help="Sets the delay (in seconds) between displaying the LEDs",
         required=False,
         type=float,
         default=1.0,

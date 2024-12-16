@@ -306,13 +306,16 @@ def visualize_solution(grid, solution, args):
                            is obtained from the Qiskit code.
         console (bool): Determines whether the lights out grid is also printed to the console during each
                         step.
+        delay (float): The delay between iteration steps.
+        brightness (float): The brightness of the LED pixels.
     Returns:
         None
     """
     # Set all command line args
     console = args.console
     delay = args.delay
-    print(delay)
+    brightness = args.brightness
+    print(console, delay, brightness)
 
     # Neopixel initialization
     spi = board.SPI()
@@ -321,7 +324,7 @@ def visualize_solution(grid, solution, args):
         spi,
         NUM_PIXELS,
         pixel_order=PIXEL_ORDER,
-        brightness=BRIGHTNESS,
+        brightness=brightness,
         auto_write=False,
     )
 
@@ -414,6 +417,14 @@ def parse_arguments():
     parser.add_argument(
         "--delay",
         help="Sets the delay between displaying the LEDs",
+        required=False,
+        type=float,
+        default=1.0,
+    )
+    parser.add_argument(
+        "-b",
+        "--brightness",
+        help="Sets the brightness of LEDs, between 0.0 and 1.0.",
         required=False,
         type=float,
         default=1.0,

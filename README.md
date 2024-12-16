@@ -2,11 +2,20 @@
 
 <p align='center'><img src="https://github.com/user-attachments/assets/5fd8765f-530d-41ba-826f-dc68ef659b17" width="75%" height="75%"/></p>
 
-This is a demo for the [RasQberry Two Platform](https://github.com/JanLahmann/RasQberry-Two). It is an implementation of the [Lights Out](https://en.wikipedia.org/wiki/Lights_Out_(game)) puzzle game that is solved using a quantum algorithm and then displays every step of the solution process on the RasQberry Two's LED panel. The LED panel is required for this script to run, although you can also have the solution steps printed to the console by adding the `--console` argument.
+This is a demo for the [RasQberry Two Platform](https://github.com/JanLahmann/RasQberry-Two). It is an implementation of the [Lights Out](<https://en.wikipedia.org/wiki/Lights_Out_(game)>) puzzle game that is solved using a quantum algorithm and then displays every step of the solution process on the RasQberry Two's LED panel. The LED panel is required for this script to run, although you can also have the solution steps printed to the console by adding the `--console` argument.
 
 ## Acknowledgements
 
 Thank you to the IBM Quantum Challenge 2020 for providing most of the code for the quantum algorithm. More info and tutorials can be found [here](https://github.com/qiskit-community/IBMQuantumChallenge2020/tree/main).
+
+## Command Line Arguments
+
+| Argument         | Default | Description                                                                   |
+| ---------------- | ------- | ----------------------------------------------------------------------------- |
+| -h, --help       | None    | Displays the help message and then exits.                                     |
+| -c, --console    | False   | Displays the grid iterations in the console. (bool)                           |
+| --delay          | 1.0     | Sets the delay between iteration steps for the LED array and console. (float) |
+| -b, --brightness | 1.0     | Sets the brightness of the LEDs. Accepts ranges between 0.0 and 1.0. (float)  |
 
 ## How to Run
 

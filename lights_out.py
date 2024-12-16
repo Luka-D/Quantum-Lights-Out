@@ -291,8 +291,6 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
             for coord in LED_array_index_list:
                 pixels[coord] = OFF_COLOR
     pixels.show()
-    # Sleep so that the display doesn't change too fast
-    time.sleep(DELAY)
 
 
 def visualize_solution(grid, solution, args):
@@ -314,6 +312,7 @@ def visualize_solution(grid, solution, args):
     # Set all command line args
     console = args.console
     delay = args.delay
+    print(delay)
 
     # Neopixel initialization
     spi = board.SPI()
@@ -347,7 +346,7 @@ def visualize_solution(grid, solution, args):
         visualize_lights_out_grid_to_console(grid)
 
     visualize_lights_out_grid_to_LED(grid, pixels)
-    time.sleep(1)
+    time.sleep(delay)
 
     for index, step in enumerate(solution):
         if step == 1:
@@ -397,6 +396,9 @@ def visualize_solution(grid, solution, args):
                 visualize_lights_out_grid_to_console(grid)
 
             visualize_lights_out_grid_to_LED(grid, pixels)
+
+            # Sleep so that the display doesn't change too fast
+            time.sleep(delay)
 
 
 def parse_arguments():

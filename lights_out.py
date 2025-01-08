@@ -312,7 +312,6 @@ def visualize_solution(grid, solution, args):
     console = args.console
     delay = args.delay
     brightness = args.brightness
-    print(console, delay, brightness)
 
     # Neopixel initialization
     spi = board.SPI()

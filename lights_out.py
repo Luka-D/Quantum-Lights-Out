@@ -58,13 +58,10 @@ LED_array_indices = {
     8: [138, 133, 137, 134],
 }
 
-# Delay before showing the next iteration
-DELAY = 1
-
 # Neopixel constants
 NUM_PIXELS = 192
 PIXEL_ORDER = neopixel.RGB
-BRIGHTNESS = 1.0
+
 # Colors for Neopixel are in the form GRB, so switch accordingly from the standard RGB hex codes
 OFF_COLOR = 0x111111  # Grey
 ON_COLOR = 0x0000FF  # Blue Other colors: 0x007FFF for Violet, 45FF00 for Orange, DFFF00 for Golden Yellow
@@ -291,11 +288,9 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
             for coord in LED_array_index_list:
                 pixels[coord] = OFF_COLOR
     pixels.show()
-    # Sleep so that the display doesn't change too fast
-    time.sleep(DELAY)
 
 
-def visualize_solution(grid, solution, console):
+def visualize_solution(grid, solution, args):
     """
     This function receives the lights-out grid and
     the solution to the grid that was generated from the quantum circuit.
@@ -308,9 +303,16 @@ def visualize_solution(grid, solution, console):
                            is obtained from the Qiskit code.
         console (bool): Determines whether the lights out grid is also printed to the console during each
                         step.
+        delay (float): The delay between iteration steps.
+        brightness (float): The brightness of the LED pixels.
     Returns:
         None
     """
+    # Set all command line args
+    console = args.console
+    delay = args.delay
+    brightness = args.brightness
+
     # Neopixel initialization
     spi = board.SPI()
 
@@ -318,7 +320,7 @@ def visualize_solution(grid, solution, console):
         spi,
         NUM_PIXELS,
         pixel_order=PIXEL_ORDER,
-        brightness=BRIGHTNESS,
+        brightness=brightness,
         auto_write=False,
     )
 
@@ -343,7 +345,7 @@ def visualize_solution(grid, solution, console):
         visualize_lights_out_grid_to_console(grid)
 
     visualize_lights_out_grid_to_LED(grid, pixels)
-    time.sleep(1)
+    time.sleep(delay)
 
     for index, step in enumerate(solution):
         if step == 1:
@@ -352,6 +354,7 @@ def visualize_solution(grid, solution, console):
                 visualize_lights_out_grid_to_console(grid, index)
 
             visualize_lights_out_grid_to_LED(grid, pixels, index)
+            time.sleep(delay)
 
             # Flip the square itself
             grid[index] = switch(grid[index])
@@ -394,6 +397,9 @@ def visualize_solution(grid, solution, console):
 
             visualize_lights_out_grid_to_LED(grid, pixels)
 
+            # Sleep so that the display doesn't change too fast
+            time.sleep(delay)
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -403,6 +409,21 @@ def parse_arguments():
         help="Displays the lights out grid in the console",
         required=False,
         action="store_true",
+    )
+    parser.add_argument(
+        "--delay",
+        help="Sets the delay (in seconds) between iteration steps for the LED array and console",
+        required=False,
+        type=float,
+        default=1.0,
+    )
+    parser.add_argument(
+        "-b",
+        "--brightness",
+        help="Sets the brightness of LEDs, between 0.0 and 1.0",
+        required=False,
+        type=float,
+        default=1.0,
     )
     return parser.parse_args()
 
@@ -419,7 +440,7 @@ def main(**kwargs):
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
             print("Visualizing solution...")
-            visualize_solution(lights_grid, quantum_solution, args.console)
+            visualize_solution(lights_grid, quantum_solution, args)
             print("\n")
     except Exception as e:
         print("An error occured: ", e)

@@ -1,5 +1,4 @@
 # Basic imports
-import matplotlib.pyplot as plt
 import numpy as np
 import math
 import time
@@ -8,14 +7,10 @@ import argparse
 
 # Qiskit imports
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, transpile
-from qiskit.visualization import plot_histogram
-
-# from dotenv import load_dotenv
 from qiskit.providers.basic_provider import BasicSimulator
 from qiskit_aer import AerSimulator
 
-# import basic plot tools
-from qiskit.visualization import plot_histogram
+# from dotenv import load_dotenv
 
 # Imports for LED array
 import board

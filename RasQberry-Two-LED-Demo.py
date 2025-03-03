@@ -169,10 +169,12 @@ def simulate_circuit(n):
 
 def display_to_LEDs(measurement):
     for index, value in enumerate(measurement):
-        # Get RGB data from pixel list
         if value:
-            LED_Array_index = indices[index]
+            LED_Array_index = indices[str(index)]
             pixels[LED_Array_index] = ON_COLOR
+        else:
+            LED_Array_index = indices[str(index)]
+            pixels[LED_Array_index] = OFF_COLOR
     pixels.show()
 
 
@@ -211,7 +213,7 @@ def main():
             spi,
             NUM_PIXELS,
             pixel_order=PIXEL_ORDER,
-            brightness=brightness,
+            brightness=1.0,
             auto_write=False,
         )
         while True:

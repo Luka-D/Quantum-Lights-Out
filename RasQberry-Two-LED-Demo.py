@@ -13,8 +13,8 @@ from qiskit.providers.basic_provider import BasicSimulator
 from qiskit_aer import AerSimulator
 
 # Imports for LED array
-# import board
-# import neopixel_spi as neopixel
+import board
+import neopixel_spi as neopixel
 
 # Constants
 config = dotenv_values("/home/pi/RasQberry/rasqberry_environment.env")
@@ -204,16 +204,16 @@ def loop(duration):
 
 def main():
     try:
-        # # Neopixel initialization
-        # spi = board.SPI()
+        # Neopixel initialization
+        spi = board.SPI()
 
-        # pixels = neopixel.NeoPixel_SPI(
-        #     spi,
-        #     NUM_PIXELS,
-        #     pixel_order=PIXEL_ORDER,
-        #     brightness=brightness,
-        #     auto_write=False,
-        # )
+        pixels = neopixel.NeoPixel_SPI(
+            spi,
+            NUM_PIXELS,
+            pixel_order=PIXEL_ORDER,
+            brightness=brightness,
+            auto_write=False,
+        )
         while True:
             player_action = input("select circuit to execute (1/2/3/q) ")
             if player_action == "1":

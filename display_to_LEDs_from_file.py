@@ -46,7 +46,7 @@ def display_to_LEDs(array_data, args):
         green, red, blue = color[0], color[1], color[2]
 
         # Set the appropriate pixel to the RGB value
-        pixels[index] = (red, green, blue)
+        pixels[int(index)] = (red, green, blue)
 
     pixels.show()
 

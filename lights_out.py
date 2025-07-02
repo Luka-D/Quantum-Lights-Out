@@ -16,7 +16,7 @@ import board
 import neopixel_spi as neopixel
 
 # Local imports
-import turn_off_LEDs
+from turn_off_LEDs import turn_off_LEDs
 
 # Constants
 # Array containing the initial lights out grid values
@@ -427,6 +427,10 @@ def parse_arguments():
 
 def main(**kwargs):
     args = parse_arguments()
+
+    # Turn off LEDs whenever the program is closed
+    atexit.register(turn_off_LEDs)
+
     try:
         while True:
             print("Starting Quantum Lights Out Solver!")
@@ -436,8 +440,6 @@ def main(**kwargs):
             print("Computing quantum solution...")
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
-            # Turn off LEDs whenever the program is closed
-            atexit.register(turn_off_LEDs)
             print("Visualizing solution...")
             visualize_solution(lights_grid, quantum_solution, args)
             print("\n")

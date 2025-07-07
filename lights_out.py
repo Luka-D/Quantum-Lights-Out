@@ -1,20 +1,22 @@
-# Basic imports
+# Standard library imports
 import numpy as np
 import math
 import time
 from random import choice
 import argparse
+import atexit
 
 # Qiskit imports
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, transpile
 from qiskit.providers.basic_provider import BasicSimulator
 from qiskit_aer import AerSimulator
 
-# from dotenv import load_dotenv
-
 # Imports for LED array
 import board
 import neopixel_spi as neopixel
+
+# Local imports
+from turn_off_LEDs import turn_off_LEDs
 
 # Constants
 # Array containing the initial lights out grid values
@@ -425,6 +427,10 @@ def parse_arguments():
 
 def main(**kwargs):
     args = parse_arguments()
+
+    # Turn off LEDs whenever the program is closed
+    atexit.register(turn_off_LEDs)
+
     try:
         while True:
             print("Starting Quantum Lights Out Solver!")

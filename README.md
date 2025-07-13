@@ -41,4 +41,4 @@ Additionally, to turn off all of the LEDs, you can run this script:
 
 ## Latest Modifications Made (By Eddie, for Approval)
   - Added the ability to specify custom grids to be solved. This is implemented using a simple file that the user can edit in a 3x3 format.
-  - Switch between LEDs and SenseHat depending on hardware available.
+  - Switch between LEDs and SenseHat depending on hardware available. This is done using the `env_detection` module

@@ -440,6 +440,7 @@ def parse_arguments():
         required=False,
         # type=float,
         default=1.0,
+        action="store_true",
     )
 
     return parser.parse_args()

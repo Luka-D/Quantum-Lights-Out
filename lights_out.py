@@ -443,7 +443,7 @@ def main(**kwargs):
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
             print("Visualizing solution...")
-            visualize_solution(lights_grid, quantum_solution, args)
+            # visualize_solution(lights_grid, quantum_solution, args)
             visualize_solution_on_sensehat(hat = hat, initial_grid=lights_grid, bitstring_solution=quantum_solution)
             print("\n")
     except Exception as e:

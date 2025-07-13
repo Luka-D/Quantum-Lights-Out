@@ -16,6 +16,7 @@ import board
 import neopixel_spi as neopixel
 from lights_out_display import *
 from sense_emu import SenseHat
+from load_cg import *
 
 # Local imports
 from turn_off_LEDs import turn_off_LEDs
@@ -294,7 +295,10 @@ def grid_selection(args, existing_grids):
     custom_grid = args.custom_grid
     if args.custom_grid:
         print("Using custom grid")
-    print(custom_grid)
+        return load_custom_grid()
+    else:
+        print("Choosing random grid arrangement...")
+        return choice(existing_grids).copy()
 
 
 def visualize_solution(grid, solution, args):
@@ -454,14 +458,8 @@ def main(**kwargs):
 
     try:
         while True:
-            print("Starting Quantum Lights Out Solver!")
-            
-            print("Choosing random grid arrangement...")
-            lights_grid = choice(lights).copy()
-
-            grid_selection(args, lights_grid)
-
-
+            print("Starting Quantum Lights Out Solver!")           
+            lights_grid = grid_selection(args, lights)
             print("Grid chosen:", lights_grid)
             print("Computing quantum solution...")
             quantum_solution = compute_quantum_solution(lights_grid)

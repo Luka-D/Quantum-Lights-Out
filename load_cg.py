@@ -5,4 +5,5 @@ def load_custom_grid():
 
     # Split by commas, strip whitespace, and convert to int
     array = [int(x.strip()) for x in data.split(',') if x.strip().isdigit()]
-    print(array)
+    return array
+    # print(array)

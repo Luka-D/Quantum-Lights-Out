@@ -292,6 +292,8 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
 def grid_selection(args, existing_grids):
     print("Would you like to use a default grid, or a random grid?")
     custom_grid = args.custom_grid
+    if args.custom_grid:
+        print("Using custom grid")
     print(custom_grid)
 
 
@@ -436,7 +438,7 @@ def parse_arguments():
         "--custom_grid",
         help="Allows the user to use a custom starting grid instead of the pre-specified ones",
         required=False,
-        type=float,
+        # type=float,
         default=1.0,
     )
 

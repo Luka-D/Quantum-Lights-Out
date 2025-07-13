@@ -17,6 +17,7 @@ import neopixel_spi as neopixel
 from lights_out_display import *
 from sense_emu import SenseHat
 from load_cg import *
+from env_detection import *
 
 # Local imports
 from turn_off_LEDs import turn_off_LEDs
@@ -465,8 +466,15 @@ def main(**kwargs):
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
             print("Visualizing solution...")
-            # visualize_solution(lights_grid, quantum_solution, args)
-            visualize_solution_on_sensehat(hat = hat, initial_grid=lights_grid, bitstring_solution=quantum_solution)
+
+            env = detect_environment()
+            if not env["neopixel_available"] and env["sensehat_emulator"]:
+                print("Using Sense HAT Emulator because NeoPixel is not available.")
+                visualize_solution_on_sensehat(hat = hat, initial_grid=lights_grid, bitstring_solution=quantum_solution)
+            else:
+                print("Using NeoPixel or real Sense HAT.")
+                visualize_solution(lights_grid, quantum_solution, args)
+            
             print("\n")
     except Exception as e:
         print("An error occured: ", e)

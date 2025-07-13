@@ -289,6 +289,12 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
     pixels.show()
 
 
+def grid_selection(args, existing_grids):
+    print("Would you like to use a default grid, or a random grid?")
+    custom_grid = args.custom_grid
+    print(custom_grid)
+
+
 def visualize_solution(grid, solution, args):
     """
     This function receives the lights-out grid and
@@ -424,6 +430,16 @@ def parse_arguments():
         type=float,
         default=1.0,
     )
+
+    parser.add_argument(
+        "-x",
+        "--custom_grid",
+        help="Allows the user to use a custom starting grid instead of the pre-specified ones",
+        required=False,
+        type=float,
+        default=1.0,
+    )
+
     return parser.parse_args()
 
 
@@ -436,8 +452,13 @@ def main(**kwargs):
     try:
         while True:
             print("Starting Quantum Lights Out Solver!")
+            
             print("Choosing random grid arrangement...")
             lights_grid = choice(lights).copy()
+
+            grid_selection(args, lights_grid)
+
+
             print("Grid chosen:", lights_grid)
             print("Computing quantum solution...")
             quantum_solution = compute_quantum_solution(lights_grid)

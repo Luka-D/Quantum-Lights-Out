@@ -14,6 +14,8 @@ from qiskit_aer import AerSimulator
 # Imports for LED array
 import board
 import neopixel_spi as neopixel
+from lights_out_display import *
+from sense_emu import SenseHat
 
 # Local imports
 from turn_off_LEDs import turn_off_LEDs
@@ -427,7 +429,7 @@ def parse_arguments():
 
 def main(**kwargs):
     args = parse_arguments()
-
+    hat = SenseHat()
     # Turn off LEDs whenever the program is closed
     atexit.register(turn_off_LEDs)
 
@@ -442,6 +444,7 @@ def main(**kwargs):
             print("Quantum solution found!")
             print("Visualizing solution...")
             visualize_solution(lights_grid, quantum_solution, args)
+            visualize_solution_on_sensehat(hat = hat, initial_grid=lights_grid, bitstring_solution=quantum_solution)
             print("\n")
     except Exception as e:
         print("An error occured: ", e)

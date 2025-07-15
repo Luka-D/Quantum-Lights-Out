@@ -38,3 +38,7 @@ Additionally, to turn off all of the LEDs, you can run this script:
 ```python3 turn_off_LEDs.py```
 
 **! Note:** To run this script on a Raspberry Pi 5, you need to have SPI set up and use the proper wiring configuration. Instructions for wiring and setting up SPI can be found [here](https://rasqberry.org/3d-model/hardware-assembly-guide).
+
+## Latest Modifications Made (By Eddie, for Approval)
+  - Added the ability to specify custom grids to be solved. This is implemented using a simple file that the user can edit in a 3x3 format.
+  - Switch between LEDs and SenseHat depending on hardware available. This is done using the `env_detection` module

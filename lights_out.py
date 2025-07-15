@@ -14,6 +14,10 @@ from qiskit_aer import AerSimulator
 # Imports for LED array
 import board
 import neopixel_spi as neopixel
+from lights_out_display import *
+from sense_emu import SenseHat
+from load_cg import *
+from env_detection import *
 
 # Local imports
 from turn_off_LEDs import turn_off_LEDs
@@ -287,6 +291,17 @@ def visualize_lights_out_grid_to_LED(grid, pixels, selected=None):
     pixels.show()
 
 
+def grid_selection(args, existing_grids):
+    print("Would you like to use a default grid, or a random grid?")
+    custom_grid = args.custom_grid
+    if args.custom_grid:
+        print("Using custom grid")
+        return load_custom_grid()
+    else:
+        print("Choosing random grid arrangement...")
+        return choice(existing_grids).copy()
+
+
 def visualize_solution(grid, solution, args):
     """
     This function receives the lights-out grid and
@@ -422,26 +437,44 @@ def parse_arguments():
         type=float,
         default=1.0,
     )
+
+    parser.add_argument(
+        "-x",
+        "--custom_grid",
+        help="Allows the user to use a custom starting grid instead of the pre-specified ones",
+        required=False,
+        # type=float,
+        default=1.0,
+        action="store_true",
+    )
+
     return parser.parse_args()
 
 
 def main(**kwargs):
     args = parse_arguments()
-
+    hat = SenseHat()
     # Turn off LEDs whenever the program is closed
     atexit.register(turn_off_LEDs)
 
     try:
         while True:
-            print("Starting Quantum Lights Out Solver!")
-            print("Choosing random grid arrangement...")
-            lights_grid = choice(lights).copy()
+            print("Starting Quantum Lights Out Solver!")           
+            lights_grid = grid_selection(args, lights)
             print("Grid chosen:", lights_grid)
             print("Computing quantum solution...")
             quantum_solution = compute_quantum_solution(lights_grid)
             print("Quantum solution found!")
             print("Visualizing solution...")
-            visualize_solution(lights_grid, quantum_solution, args)
+
+            env = detect_environment()
+            if not env["neopixel_available"] and env["sensehat_emulator"]:
+                print("Using Sense HAT Emulator because NeoPixel is not available.")
+                visualize_solution_on_sensehat(hat = hat, initial_grid=lights_grid, bitstring_solution=quantum_solution)
+            else:
+                print("Using NeoPixel or real Sense HAT.")
+                visualize_solution(lights_grid, quantum_solution, args)
+            
             print("\n")
     except Exception as e:
         print("An error occured: ", e)

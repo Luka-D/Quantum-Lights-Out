@@ -19,22 +19,32 @@ Thank you to the IBM Quantum Challenge 2020 for providing most of the code for t
 | --delay          | 1.0     | Sets the delay (in seconds) between iteration steps for the LED array and console. (float) |
 | -b, --brightness | 1.0     | Sets the brightness of the LEDs. Accepts ranges between 0.0 and 1.0. (float)               |
 
-## How to Run
+## Installation
 
 Install all the necessary dependencies using pip:
 
-```pip install -r requirements.txt```
+```python
+pip install -r requirements.txt
+```
+
+## How to Run
 
 Run the script using:
 
-```python3 lights_out.py```
+```python
+python3 lights_out.py
+```
 
 To run the script with console printing of every step, use:
 
-```python3 lights_out.py --console```
+```python
+python3 lights_out.py --console
+```
 
 Additionally, to turn off all of the LEDs, you can run this script:
 
-```python3 turn_off_LEDs.py```
+```python
+python3 turn_off_LEDs.py
+```
 
 **! Note:** To run this script on a Raspberry Pi 5, you need to have SPI set up and use the proper wiring configuration. Instructions for wiring and setting up SPI can be found [here](https://rasqberry.org/3d-model/hardware-assembly-guide).

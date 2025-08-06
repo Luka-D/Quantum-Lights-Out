@@ -57,12 +57,12 @@ LED_array_indices = {
 
 # Neopixel constants
 NUM_PIXELS = 192
-PIXEL_ORDER = neopixel.RGB
+PIXEL_ORDER = neopixel.GRB
 
-# Colors for Neopixel are in the form GRB, so switch accordingly from the standard RGB hex codes
+# Colors for Neopixel are in the form RGB
 OFF_COLOR = 0x111111  # Grey
 ON_COLOR = 0x0000FF  # Blue Other colors: 0x007FFF for Violet, 45FF00 for Orange, DFFF00 for Golden Yellow
-SELECTED_COLOR = 0xFF0000  # Green
+SELECTED_COLOR = 0x00FF00  # Green
 
 
 def compute_quantum_solution(lights):

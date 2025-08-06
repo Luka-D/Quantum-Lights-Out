@@ -14,7 +14,7 @@ def turn_off_LEDs():
         None
     """
     NUM_PIXELS = 192
-    PIXEL_ORDER = neopixel.RGB
+    PIXEL_ORDER = neopixel.GRB
 
     try:
         spi = board.SPI()
